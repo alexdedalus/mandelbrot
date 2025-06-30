@@ -1,0 +1,33 @@
+name: Run Mandelbrot .exe
+
+on:
+  workflow_dispatch:  # Permite rodar o workflow manualmente através da interface do GitHub
+    inputs:
+      mandelbrotExePath:
+        description: 'Caminho para o arquivo mandelbrot.exe'
+        required: true
+        default: './mandelbrot.exe'
+
+jobs:
+  run:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download Executable (Mandelbrot)
+      uses: actions/download-artifact@v2
+      with:
+        name: mandelbrot-exe
+        path: ./mandelbrot.exe
+
+    - name: Run Mandelbrot Executable
+      run: |
+        ./mandelbrot.exe
+
+    - name: Upload Image
+      uses: actions/upload-artifact@v4
+      with:
+        name: mandelbrot-image
+        path: mandelbrot.png
