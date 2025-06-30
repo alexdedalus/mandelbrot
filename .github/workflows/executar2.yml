@@ -1,0 +1,37 @@
+name: Run Mandelbrot .exe
+
+on:
+  workflow_dispatch:  # Permite rodar o workflow manualmente através da interface do GitHub
+
+jobs:
+  run:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download Executable (Mandelbrot)
+      uses: actions/download-artifact@v2
+      with:
+        name: mandelbrot-exe
+        path: ./  # Baixar o arquivo mandelbrot.exe para a raiz do repositório
+
+    - name: Verify mandelbrot.exe exists
+      run: |
+        if exist mandelbrot.exe (
+          echo "Executável mandelbrot.exe encontrado!"
+        ) else (
+          echo "Erro: mandelbrot.exe não encontrado!"
+          exit 1
+        )
+
+    - name: Run Mandelbrot Executable
+      run: |
+        .\mandelbrot.exe  # Executa o arquivo mandelbrot.exe, com caminho relativo
+
+    - name: Upload Image
+      uses: actions/upload-artifact@v4
+      with:
+        name: mandelbrot-image
+        path: mandelbrot.png
