@@ -1,4 +1,4 @@
-name: Run Mandelbrot .exe
+name: Run Mandelbrot .exe 2
 
 on:
   workflow_dispatch:  # Permite rodar o workflow manualmente através da interface do GitHub
@@ -26,7 +26,7 @@ jobs:
           exit 1
         )
 
-    - name: Run Mandelbrot Executable
+    - name: Run Mandelbrot Executable 2
       run: |
         .\mandelbrot.exe  # Executa o arquivo mandelbrot.exe, com caminho relativo
 
